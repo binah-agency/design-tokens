@@ -73,9 +73,16 @@ async function build(): Promise<void> {
     ];
 
     for (const output of outputs) {
-      Logger.info(`Generating ${output.name}...`, { file: output.path });
-      await writeFile(output.path, output.content, 'utf8');
-      Logger.success(`${output.name} generated successfully`, { file: output.path });
+      Logger.info(`Output object:`, { output });
+      const outputPath = output.path;
+      Logger.info(`Output path:`, { outputPath });
+      if (!outputPath) {
+        Logger.error(`Output path is undefined for ${output.name}`);
+        continue;
+      }
+      Logger.info(`Generating ${output.name}...`, { file: outputPath });
+      await writeFile(outputPath, output.content, 'utf8');
+      Logger.success(`${output.name} generated successfully`, { file: outputPath });
     }
 
     const endTime = performance.now();
