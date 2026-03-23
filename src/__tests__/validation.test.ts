@@ -1,4 +1,4 @@
-import { validateTokens } from '../src/utils/validation';
+import { validateTokenStructure } from '../../utils/validation';
 
 // Mock console for testing
 const mockConsole = {

@@ -1,5 +1,6 @@
 module.exports = {
   testEnvironment: 'node',
+  preset: 'ts-jest',
   roots: ['<rootDir>/src'],
   testMatch: [
     '**/__tests__/**/*.test.ts',
@@ -19,9 +20,8 @@ module.exports = {
     'html'
   ],
   setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts'],
-  moduleNameMapping: {
-    '^@/(.*)$': 'src/$1'
-  },
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   testTimeout: 10000,
-  verbose: true
+  verbose: true,
+  extensionsToTreatAsEsm: ['.ts']
 };
