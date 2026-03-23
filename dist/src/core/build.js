@@ -1,0 +1,63 @@
+import fs from 'fs';
+import { writeFile } from 'fs/promises';
+import { performance } from 'perf_hooks';
+import { buildCSS, buildEnterpriseTypes, buildMantine, buildMantineConfig, buildTailwind, buildTamagui, buildTypeScript } from '../builders';
+import { CONFIG } from '../config/constants';
+import { Logger } from '../utils/logger';
+import { cleanRawTokens, convertW3CToTokenCollection } from '../utils/token-resolution';
+import { validateSchema, validateTokenStructure } from '../utils/validation';
+async function build() {
+    const startTime = performance.now();
+    Logger.info('Starting token build process...', { function: 'build' });
+    try {
+        const rawData = fs.readFileSync(CONFIG.inputPath, 'utf8');
+        const tokens = cleanRawTokens(JSON.parse(rawData));
+        const valid = validateSchema(tokens);
+        if (!valid(tokens)) {
+            Logger.error('Schema validation failed:', { function: 'build' });
+            console.error(valid.errors);
+            process.exit(1);
+        }
+        const globals = convertW3CToTokenCollection(tokens);
+        const themes = {
+            light: tokens.light?.theme || {},
+            dark: tokens.dark?.theme || {}
+        };
+        const result = validateTokenStructure(tokens);
+        if (!result.valid) {
+            Logger.error('Token structure validation failed:', { function: 'build' });
+            result.errors.forEach((issue) => Logger.error(`  - ${issue}`));
+            process.exit(1);
+        }
+        if (result.warnings.length > 0) {
+            result.warnings.forEach((warning) => Logger.warn(`Warning: ${warning}`));
+        }
+        // CRITICAL: Resolve tokens before distribution
+        const rootScope = { ...globals, ...themes.light };
+        const resolvedGlobals = globals;
+        const resolvedLight = themes.light;
+        const resolvedDark = themes.dark;
+        const outputs = [
+            { path: CONFIG.outputPaths.css, content: buildCSS(resolvedGlobals, { light: resolvedLight, dark: resolvedDark }), name: 'CSS Variables' },
+            { path: CONFIG.outputPaths.tailwind, content: buildTailwind(resolvedGlobals, { light: resolvedLight, dark: resolvedDark }), name: 'Tailwind Config' },
+            { path: CONFIG.outputPaths.mantine, content: buildMantine(), name: 'Mantine PostCSS' },
+            { path: CONFIG.outputPaths.mantineConfig, content: buildMantineConfig(resolvedGlobals), name: 'Mantine Config' },
+            { path: CONFIG.outputPaths.tamagui, content: buildTamagui(resolvedGlobals), name: 'Tamagui Config' },
+            { path: CONFIG.outputPaths.types, content: buildTypeScript(resolvedGlobals, { light: resolvedLight, dark: resolvedDark }), name: 'TypeScript Types' },
+            { path: CONFIG.outputPaths.enterpriseTypes, content: buildEnterpriseTypes(resolvedGlobals), name: 'Enterprise Types' }
+        ];
+        for (const output of outputs) {
+            Logger.info(`Generating ${output.name}...`, { file: output.path });
+            await writeFile(output.path, output.content, 'utf8');
+            Logger.success(`${output.name} generated successfully`, { file: output.path });
+        }
+        const endTime = performance.now();
+        Logger.success(`Build completed in ${((endTime - startTime) / 1000).toFixed(2)}s`, { function: 'build' });
+    }
+    catch (error) {
+        Logger.error(`Build failed: ${error.message}`, { function: 'build' });
+        process.exit(1);
+    }
+}
+export { build };
+//# sourceMappingURL=build.js.map

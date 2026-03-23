@@ -1,0 +1,68 @@
+{
+  "name": "@crediscore/tokens",
+  "version": "1.0.0",
+  "description": "Modular design tokens compilation system with multi-framework support",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./cli": {
+      "import": "./dist/cli/index.js",
+      "types": "./dist/cli/index.d.ts"
+    },
+    "./builders": {
+      "import": "./dist/builders/index.js",
+      "types": "./dist/builders/index.d.ts"
+    },
+    "./types": {
+      "import": "./dist/types/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./utils": {
+      "import": "./dist/utils/index.js",
+      "types": "./dist/utils/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/**/*",
+    "src/**/*",
+    "theme.tokens.json"
+  ],
+  "scripts": {
+    "build": "tsx src/cli/index.ts build",
+    "build:legacy": "node build.ts --build",
+    "watch": "tsx src/cli/index.ts watch",
+    "validate": "tsx src/cli/index.ts validate",
+    "clean": "tsx src/cli/index.ts clean",
+    "dev": "tsx src/cli/index.ts build --watch",
+    "type-check": "tsc --noEmit",
+    "compile": "tsc",
+    "prepublishOnly": "npm run compile"
+  },
+  "dependencies": {
+    "ajv": "^8.18.0",
+    "chalk": "^5.6.2",
+    "chokidar": "^5.0.0",
+    "inquirer": "^13.3.2",
+    "commander": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.9.2"
+  },
+  "bin": {
+    "design-tokens": "./dist/src/cli/index.js"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
