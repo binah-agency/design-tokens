@@ -7,12 +7,27 @@ import type { ValidationResult } from '../types';
 import { Logger } from '../utils/logger';
 import { cleanRawTokens, convertW3CToTokenCollection } from '../utils/token-resolution';
 import { validateSchema, validateTokenStructure } from '../utils/validation';
+import path from 'path';
+
+async function ensureDirectoryExists(dirPath: string): Promise<void> {
+  try {
+    await fs.promises.mkdir(dirPath, { recursive: true });
+  } catch (error) {
+    // Directory already exists, ignore error
+  }
+}
 
 async function build(): Promise<void> {
   const startTime = performance.now();
   Logger.info('Starting token build process...', { function: 'build' });
 
   try {
+    // Ensure all output directories exist
+    for (const [key, output] of Object.entries(CONFIG.outputPaths)) {
+      const dir = path.dirname((output as { path: string }).path);
+      await ensureDirectoryExists(dir);
+    }
+
     const rawData = fs.readFileSync(CONFIG.inputPath, 'utf8');
     const tokens = cleanRawTokens(JSON.parse(rawData));
     
