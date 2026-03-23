@@ -22,12 +22,6 @@ async function build(): Promise<void> {
   Logger.info('Starting token build process...', { function: 'build' });
 
   try {
-    // Ensure all output directories exist
-    for (const [key, output] of Object.entries(CONFIG.outputPaths)) {
-      const dir = path.dirname((output as { path: string }).path);
-      await ensureDirectoryExists(dir);
-    }
-
     const rawData = fs.readFileSync(CONFIG.inputPath, 'utf8');
     const tokens = cleanRawTokens(JSON.parse(rawData));
     
@@ -73,16 +67,14 @@ async function build(): Promise<void> {
     ];
 
     for (const output of outputs) {
-      Logger.info(`Output object:`, { output });
       const outputPath = output.path;
-      Logger.info(`Output path:`, { outputPath });
       if (!outputPath) {
-        Logger.error(`Output path is undefined for ${output.name}`);
+        console.error(`Output path is undefined for ${output.name}`);
         continue;
       }
-      Logger.info(`Generating ${output.name}...`, { file: outputPath });
+      console.log(`Generating ${output.name} to ${outputPath}`);
       await writeFile(outputPath, output.content, 'utf8');
-      Logger.success(`${output.name} generated successfully`, { file: outputPath });
+      console.log(`${output.name} generated successfully`);
     }
 
     const endTime = performance.now();
