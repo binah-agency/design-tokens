@@ -5,15 +5,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export const CONFIG = {
-  inputPath: path.join(__dirname, '../theme.tokens.json'),
+  inputPath: path.join(__dirname, '../../theme.tokens.json'),
   outputPaths: {
-    css: path.join(__dirname, '../dist/css/theme.css'),
-    tailwind: path.join(__dirname, '../dist/tailwind/tailwind.config.ts'),
-    mantine: path.join(__dirname, '../dist/mantine/postcss.config.js'),
-    mantineConfig: path.join(__dirname, '../dist/mantine/mantine.config.ts'),
-    tamagui: path.join(__dirname, '../dist/tamagui/tamagui.config.ts'),
-    types: path.join(__dirname, '../dist/types/mantine.d.ts'),
-    enterpriseTypes: path.join(__dirname, '../dist/types/generated/enterprise-types.ts')
+    css: path.join(__dirname, '../../dist/css/theme.css'),
+    tailwind: path.join(__dirname, '../../dist/tailwind/tailwind.config.ts'),
+    mantine: path.join(__dirname, '../../dist/mantine/postcss.config.js'),
+    mantineConfig: path.join(__dirname, '../../dist/mantine/mantine.config.ts'),
+    tamagui: path.join(__dirname, '../../dist/tamagui/tamagui.config.ts'),
+    types: path.join(__dirname, '../../dist/types/mantine.d.ts'),
+    enterpriseTypes: path.join(__dirname, '../../dist/types/generated/enterprise-types.ts')
   },
   prefix: 'credi',
   baseFontSize: 16,
