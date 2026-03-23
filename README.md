@@ -246,12 +246,42 @@ npm run dev
 # Validar tokens
 npm run validate
 
+# Ejecutar tests unitarios
+npm run test
+
+# Ejecutar tests con coverage
+npm run test:coverage
+
+# Ejecutar tests de integración
+npm run test:integration
+
+# Ejecutar tests en modo watch
+npm run test:watch
+
 # Limpiar build
 npm run clean
 
 # Publicar paquete
 npm run publish
 ```
+
+### **🧪 Test Suite**
+El repositorio incluye una suite completa de pruebas:
+
+#### **✅ Unit Tests**
+- **Validación de tokens**: Estructura y formato de tokens
+- **Detección de errores**: Tokens faltantes o inválidos
+- **Referencias cruzadas**: Validación de referencias entre tokens
+
+#### **✅ Integration Tests**
+- **End-to-end workflow**: Compilación completa y validación
+- **Builders testing**: Generación de archivos para diferentes plataformas
+- **CLI commands**: Validación de comandos de línea
+
+#### **📊 Coverage**
+- **Objetivo**: >90% de cobertura de código
+- **Reportes**: HTML, LCOV, y texto
+- **Umbral**: Mínimo 80% para pasar CI/CD
 
 ### **🔄 Build Pipeline**
 El pipeline de build procesa los tokens y genera múltiples formatos:
@@ -261,24 +291,32 @@ El pipeline de build procesa los tokens y genera múltiples formatos:
 3. **Platform Builders**: Para Tamagui, Tailwind, Mantine
 4. **Validation**: Verifica integridad de tokens
 5. **Optimization**: Minificación y optimización
+6. **Testing**: Ejecución automática de tests
 
-### **🧪 Estructura de Build**
+### **🧪 Estructura de Tests**
 ```
-dist/
-├── src/
-│   ├── index.ts              # Export principal
-│   ├── types/               # Tipos TypeScript
-│   │   ├── colors.ts      # Tipos de colores
-│   │   ├── spacing.ts     # Tipos de espaciado
-│   │   └── radius.ts      # Tipos de bordes
-│   ├── utils/               # Utilidades
-│   │   ├── helpers.ts      # Funciones helper
-│   │   └── validation.ts  # Validación
-│   └── builders/           # Platform-specific
-│       ├── tamagui-builder.ts   # Para Tamagui
-│       ├── tailwind-builder.ts   # Para Tailwind
-│       └── mantine-builder.ts   # Para Mantine
-└── tsconfig.json              # Configuración TypeScript
+src/__tests__/
+├── tokens.test.ts           # Tests de validación de tokens
+├── compiler.test.ts         # Tests del compilador
+├── builders.test.ts         # Tests de builders específicos
+├── cli.test.ts             # Tests de comandos CLI
+└── integration/             # Tests de integración
+    └── end-to-end.test.ts  # Workflow completo
+```
+
+### **🎯 Ejecución de Tests**
+```bash
+# Ejecutar todos los tests
+npm test
+
+# Ejecutar con coverage
+npm run test:coverage
+
+# Ejecutar tests específicos
+npm test -- --testNamePattern="tokens"
+
+# Modo desarrollo (watch)
+npm run test:watch
 ```
 
 ---

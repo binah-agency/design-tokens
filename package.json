@@ -2,6 +2,9 @@
   "name": "@crediscore/tokens",
   "version": "1.0.0",
   "description": "Modular design tokens compilation system with multi-framework support",
+  "author": {
+    "name": "Crediscore Team UXUI"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
@@ -42,7 +45,14 @@
     "dev": "tsx src/cli/index.ts build --watch",
     "type-check": "tsc --noEmit",
     "compile": "tsc",
-    "prepublishOnly": "npm run compile"
+    "prepublishOnly": "npm run compile",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:integration": "jest --testPathPattern=integration",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "prepublish": "npm run test && npm run compile"
   },
   "dependencies": {
     "ajv": "^8.18.0",
@@ -53,6 +63,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
+    "@types/jest": "^29.5.0",
     "tsx": "^4.0.0",
     "typescript": "^5.9.2"
   },
