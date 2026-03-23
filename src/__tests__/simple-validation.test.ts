@@ -79,7 +79,10 @@ describe('Design Tokens Tests', () => {
     const result = mockValidateTokenStructure(incompleteTokens);
     
     expect(result.valid).toBe(false);
-    expect(result.errors).toContain('Missing required color');
+    expect(result.errors).toContain('Missing required color: verdeVitalidad');
+    expect(result.errors).toContain('Missing required color: rojoAlerta');
+    expect(result.errors).toContain('Missing required spacing: md');
+    expect(result.errors).toContain('Missing required spacing: lg');
   });
 
   test('should detect invalid color format', () => {
@@ -94,6 +97,7 @@ describe('Design Tokens Tests', () => {
     const result = mockValidateTokenStructure(invalidTokens);
     
     expect(result.valid).toBe(false);
-    expect(result.errors).toContain('Missing required color');
+    expect(result.errors).toContain('Missing required color: verdeVitalidad');
+    expect(result.errors).toContain('Missing required color: rojoAlerta');
   });
 });
