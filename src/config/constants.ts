@@ -5,7 +5,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export const CONFIG = {
-  inputPath: path.join(__dirname, '../../theme.tokens.json'),
+  inputPath: path.join(__dirname, '../theme.tokens.json'),
   outputPaths: {
     css: path.join(__dirname, '../dist/css/theme.css'),
     tailwind: path.join(__dirname, '../dist/tailwind/tailwind.config.ts'),
