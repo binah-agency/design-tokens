@@ -1,4 +1,4 @@
-import { CONFIG } from '../config/constants';
+import { CONFIG } from '../../../../tests/constants';
 import type { TokenCollection } from '../types';
 
 export const buildEnterpriseTypes = (globals: TokenCollection): string => {

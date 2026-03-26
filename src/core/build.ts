@@ -1,21 +1,13 @@
 import fs from 'fs';
 import { writeFile } from 'fs/promises';
+import path from 'path';
 import { performance } from 'perf_hooks';
-import { buildCSS, buildEnterpriseTypes, buildMantine, buildMantineConfig, buildTailwind, buildTamagui, buildTypeScript } from '../builders';
-import { CONFIG } from '../config/constants';
+import { CONFIG } from '../../../../tests/constants';
+import { buildCSS, buildEnterpriseTypes, buildIndex, buildMantine, buildMantineConfig, buildReadme, buildTailwind, buildTamagui, buildTypeScript } from '../builders';
 import type { ValidationResult } from '../types';
 import { Logger } from '../utils/logger';
 import { cleanRawTokens, convertW3CToTokenCollection } from '../utils/token-resolution';
 import { validateSchema, validateTokenStructure } from '../utils/validation';
-import path from 'path';
-
-async function ensureDirectoryExists(dirPath: string): Promise<void> {
-  try {
-    await fs.promises.mkdir(dirPath, { recursive: true });
-  } catch (error) {
-    // Directory already exists, ignore error
-  }
-}
 
 async function build(): Promise<void> {
   const startTime = performance.now();
@@ -60,10 +52,12 @@ async function build(): Promise<void> {
       { path: CONFIG.outputPaths.css, content: buildCSS(resolvedGlobals, { light: resolvedLight, dark: resolvedDark }), name: 'CSS Variables' },
       { path: CONFIG.outputPaths.tailwind, content: buildTailwind(resolvedGlobals, { light: resolvedLight, dark: resolvedDark }), name: 'Tailwind Config' },
       { path: CONFIG.outputPaths.mantine, content: buildMantine(), name: 'Mantine PostCSS' },
-      { path: CONFIG.outputPaths.mantineConfig, content: buildMantineConfig(resolvedGlobals), name: 'Mantine Config' },
+      { path: CONFIG.outputPaths.mantineConfig, content: buildMantineConfig(resolvedGlobals, tokens), name: 'Mantine Config' },
       { path: CONFIG.outputPaths.tamagui, content: buildTamagui(resolvedGlobals), name: 'Tamagui Config' },
       { path: CONFIG.outputPaths.types, content: buildTypeScript(resolvedGlobals, { light: resolvedLight, dark: resolvedDark }), name: 'TypeScript Types' },
-      { path: CONFIG.outputPaths.enterpriseTypes, content: buildEnterpriseTypes(resolvedGlobals), name: 'Enterprise Types' }
+      { path: CONFIG.outputPaths.enterpriseTypes, content: buildEnterpriseTypes(resolvedGlobals), name: 'Enterprise Types' },
+      { path: CONFIG.outputPaths.index, content: buildIndex(resolvedGlobals), name: 'Index File' },
+      { path: CONFIG.outputPaths.readme, content: buildReadme(resolvedGlobals), name: 'README' }
     ];
 
     for (const output of outputs) {
@@ -72,6 +66,11 @@ async function build(): Promise<void> {
         console.error(`Output path is undefined for ${output.name}`);
         continue;
       }
+      
+      // Ensure directory exists before writing
+      const dir = path.dirname(outputPath);
+      await fs.promises.mkdir(dir, { recursive: true });
+      
       console.log(`Generating ${output.name} to ${outputPath}`);
       await writeFile(outputPath, output.content, 'utf8');
       console.log(`${output.name} generated successfully`);

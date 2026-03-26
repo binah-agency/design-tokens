@@ -169,6 +169,21 @@
       "logoMin": {
         "value": "24",
         "type": "sizing"
+      },
+      "buttonSm": {
+        "value": "28",
+        "type": "sizing",
+        "description": "Altura de botones pequeños"
+      },
+      "buttonMd": {
+        "value": "36",
+        "type": "sizing",
+        "description": "Altura de botones medianos (default)"
+      },
+      "buttonLg": {
+        "value": "44",
+        "type": "sizing",
+        "description": "Altura de botones grandes"
       }
     },
     "radius": {
@@ -185,6 +200,11 @@
         "value": "8",
         "type": "borderRadius",
         "description": "Botones estándar, tarjetas pequeñas"
+      },
+      "button": {
+        "value": "16",
+        "type": "borderRadius",
+        "description": "Botones Crediscore - radio estándar"
       },
       "3": {
         "value": "12",
@@ -242,6 +262,11 @@
       "disabled": {
         "value": "0.4",
         "type": "opacity"
+      },
+      "buttonDisabled": {
+        "value": "0.6",
+        "type": "opacity",
+        "description": "Opacidad para botones deshabilitados"
       },
       "soft": {
         "value": "0.8",
@@ -339,6 +364,15 @@
       "regular": {
         "value": "400",
         "type": "fontWeights"
+      },
+      "medium": {
+        "value": "500",
+        "type": "fontWeights"
+      },
+      "semibold": {
+        "value": "600",
+        "type": "fontWeights",
+        "description": "Botones y elementos interactivos"
       },
       "bold": {
         "value": "700",

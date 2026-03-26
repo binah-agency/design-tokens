@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { program } from 'commander';
-import { CONFIG } from '../config/constants';
+import { CONFIG } from '../../../../tests/constants';
 import { build } from '../core/build';
 import { Logger } from '../utils/logger';
 

@@ -49,13 +49,18 @@ export const validateTokenStructure = (tokens: TokenSchema): ValidationResult =>
   }
   
   if (tokens.global?.space) {
-    const spaceValues = Object.values(tokens.global.space).map((token: W3CToken<any>) => token.value);
+    // Extract values from the nested token structure
+    const spaceValues = Object.values(tokens.global.space).map((token) => {
+      return parseInt(token.value.toString());
+    });
+    
     if (!spaceValues.includes(4) || !spaceValues.includes(8) || !spaceValues.includes(16)) {
       warnings.push('Space tokens should include 4px, 8px, and 16px for Figma consistency');
     }
   }
   
-  if (!tokens.global?.typography?.fontFamily?.montserrat) {
+  // Check for Montserrat font family at root level
+  if (!tokens.global?.fontFamily?.montserrat) {
     warnings.push('Montserrat font family not found - recommended for Figma compliance');
   }
   

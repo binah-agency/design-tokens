@@ -5,6 +5,8 @@
 > **Figma Compliance v1.0** - Tokens mapeados exactamente desde Figma Design System
 > 
 > **Atomic Design Ready** - Diseñado para componentes atómicos y composición
+> 
+> **Multi-Framework Support** - Genera configs para Tamagui, Tailwind, Mantine, CSS Variables
 
 ---
 
@@ -17,6 +19,7 @@
 - [🔧 Desarrollo](#-desarrollo)
 - [📚 Referencia de Tokens](#-referencia-de-tokens)
 - [🔄 Build Pipeline](#-build-pipeline)
+- [✅ Validación](#-validación)
 - [🚀 Despliegue](#-despliegue)
 
 ---
@@ -29,10 +32,10 @@
 git clone https://github.com/binah-agency/design-tokens.git
 
 # Instalar dependencias
-npm install
+pnpm install
 
 # Build tokens
-npm run build
+pnpm build
 ```
 
 ### **Uso Inmediato**
@@ -40,13 +43,349 @@ npm run build
 // Importar tokens en tu componente Tamagui
 import { colors, spacing, radius } from '@crediscore/tokens';
 
-// Usar en componentes React Native
+// Usar en componentes React Native con Tamagui
 const MyComponent = styled(View, {
   backgroundColor: colors.azulHorizonte,
   padding: spacing.md,
   borderRadius: radius.md,
 });
 ```
+
+---
+
+## 🏗️ Estructura del Proyecto
+
+```
+packages/design-tokens/
+├── src/
+│   ├── builders/          # Generadores de configs framework
+│   │   ├── tamagui.ts    # Generador Tamagui
+│   │   ├── tailwind.ts   # Generador Tailwind
+│   │   ├── mantine.ts    # Generador Mantine
+│   │   └── css.ts        # Generador CSS Variables
+│   ├── config/
+│   │   └── constants.ts   # Configuración del build pipeline
+│   ├── core/
+│   │   └── build.ts       # Core del build process
+│   ├── utils/
+│   │   └── validation.ts  # Validación de tokens
+│   └── types/
+│       └── index.ts       # TypeScript types
+├── theme.tokens.json     # 🎯 Fuente de verdad única
+├── dist/                  # Archivos generados
+└── README.md
+```
+
+---
+
+## 🎨 Tokens Disponibles
+
+### **🎨 Colores**
+```json
+{
+  "azulHorizonte": "#3467B0",     // Primary brand color
+  "verdeVitalidad": "#86B545",    // Secondary brand color
+  "rojoAlerta": "#D32F2F",        // Error state
+  "naranjaEspera": "#F57C00",     // Warning state
+  "white": "#FFFFFF",             // Neutral white
+  "black": "#2D2D2C",             // Neutral black
+  "gray50": "#F7F8F9",            // Gray scale
+  "gray200": "#E5E5E5",
+  "gray400": "#B5B5B5",
+  "gray600": "#7A7A7A",
+  "gray800": "#4A4A4A"
+}
+```
+
+### **📏 Espaciado**
+```json
+{
+  "0": "0",      // No spacing
+  "1": "4",      // 4px - Figma base
+  "2": "8",      // 8px - Figma base  
+  "3": "12",     // 12px
+  "4": "16",     // 16px - Figma base
+  "5": "24",     // 24px
+  "6": "32",     // 32px
+  "7": "48",     // 48px
+  "8": "64",     // 64px
+  "9": "80",     // 80px
+  "10": "96"     // 96px
+}
+```
+
+### **🔤 Tipografía**
+```json
+{
+  "fontFamily": {
+    "montserrat": "Montserrat, sans-serif"
+  },
+  "fontSize": {
+    "xs": "12",
+    "sm": "14", 
+    "base": "16",
+    "lg": "18",
+    "xl": "20",
+    "2xl": "24",
+    "3xl": "30",
+    "4xl": "36",
+    "5xl": "48"
+  }
+}
+```
+
+### **🔄 Radio de Bordes**
+```json
+{
+  "0": "0",      // Sin bordes
+  "1": "4",      // 4px radius
+  "2": "8",      // 8px radius
+  "3": "12",     // 12px radius
+  "4": "16",     // 16px radius
+  "round": "9999" // Completely rounded
+}
+```
+
+---
+
+## 🎯 Uso en Componentes
+
+### **Tamagui Components**
+```typescript
+import { XStack, Text } from 'tamagui';
+
+const Button = ({ variant = 'primary' }) => (
+  <XStack
+    backgroundColor={variant === 'primary' ? '$azulHorizonte' : '$verdeVitalidad'}
+    padding="$4"
+    borderRadius="$2"
+  >
+    <Text color="$white" fontFamily="$heading">
+      Button Text
+    </Text>
+  </XStack>
+);
+```
+
+### **CSS Variables**
+```css
+.my-component {
+  background-color: var(--azul-horizonte);
+  padding: var(--space-4);
+  border-radius: var(--radius-2);
+  font-family: var(--font-montserrat);
+}
+```
+
+### **Tailwind CSS**
+```html
+<div class="bg-azul-horizonte p-4 rounded-2 font-montserrat">
+  Content with design tokens
+</div>
+```
+
+---
+
+## 🔧 Desarrollo
+
+### **Comandos Disponibles**
+```bash
+# Build todos los configs
+pnpm build
+
+# Watch mode para desarrollo
+pnpm dev
+
+# Validar tokens
+pnpm validate
+
+# Limpiar builds
+pnpm clean
+
+# Type checking
+pnpm type-check
+
+# Tests
+pnpm test
+pnpm test:coverage
+```
+
+### **Agregar Nuevos Tokens**
+1. Editar `theme.tokens.json` (única fuente de verdad)
+2. Run `pnpm build` (genera todos los configs automáticamente)
+3. Los cambios se aplican a todos los frameworks
+
+```json
+// theme.tokens.json
+{
+  "global": {
+    "color": {
+      "newColor": {
+        "value": "#FF6B6B",
+        "type": "color",
+        "description": "New brand color"
+      }
+    }
+  }
+}
+```
+
+---
+
+## 🔄 Build Pipeline
+
+### **Proceso Automático**
+```bash
+pnpm build
+```
+
+**Genera automáticamente:**
+- ✅ **CSS Variables**: `dist/css/theme.css`
+- ✅ **Tailwind Config**: `dist/tailwind/tailwind.config.ts`
+- ✅ **Mantine Config**: `dist/mantine/mantine.config.ts`
+- ✅ **Tamagui Config**: `dist/tamagui/tamagui.config.ts`
+- ✅ **TypeScript Types**: `dist/types/mantine.d.ts`
+- ✅ **Enterprise Types**: `dist/types/generated/enterprise-types.ts`
+
+### **Auto-Sync Tamagui Config**
+```bash
+# El build automáticamente sincroniza:
+dist/tamagui/tamagui.config.ts → ../config/tamagui/tamagui.config.ts
+```
+
+---
+
+## ✅ Validación
+
+### **Validaciones Automáticas**
+El build process incluye validaciones automáticas:
+
+- ✅ **Schema Validation**: Estructura JSON válida
+- ✅ **Token Structure**: Tokens requeridos presentes
+- ✅ **Figma Compliance**: 4px, 8px, 16px spacing
+- ✅ **Font Family**: Montserrat disponible
+- ✅ **Color Palette**: Colores Figma requeridos
+
+### **Test de Tamagui**
+```bash
+# Verificar configuración de Tamagui
+node tests/simple-tamagui-test.mjs
+```
+
+**Valida:**
+- ✅ Tokens "true" presentes (requerido por Tamagui)
+- ✅ Estructura compatible con createTamagui()
+- ✅ Tokens de color correctamente mapeados
+- ✅ Sin claves problemáticas en radius
+
+---
+
+## 🚀 Despliegue
+
+### **Publicación**
+```bash
+# Build y test
+pnpm build
+pnpm test
+
+# Publicar a registry restringido
+npm publish
+```
+
+### **Integración CI/CD**
+```yaml
+# .github/workflows/build.yml
+- name: Build Design Tokens
+  run: |
+    cd packages/design-tokens
+    pnpm install
+    pnpm build
+    pnpm test
+
+- name: Sync Configs  
+  run: |
+    # Auto-sync generated configs
+    pnpm sync:config
+```
+
+---
+
+## 📚 Referencia Completa
+
+### **Tokens Semánticos**
+```typescript
+// Colores semánticos generados automáticamente
+{
+  primary: '$azulHorizonte',      // Primary brand
+  secondary: '$verdeVitalidad',    // Secondary brand
+  success: '$verdeVitalidad',      // Success state
+  warning: '$naranjaEspera',       // Warning state
+  error: '$rojoAlerta',            // Error state
+  text: '$black',                 // Text color
+  background: '$white',           // Background color
+  borderColor: '$gray200'          // Border color
+}
+```
+
+### **Tokens de Estado**
+```typescript
+// Estados interactivos
+{
+  colorDisabled: '$gray400',           // Disabled state
+  backgroundHover: '$azulHorizonteLight', // Hover state
+  borderFocused: '$azulHorizonte',      // Focus state
+  colorPressed: '$azulHorizonteDark'     // Pressed state
+}
+```
+
+---
+
+## 🔗 Frameworks Soportados
+
+| Framework | Config Generated | Auto-Sync | Status |
+|-----------|------------------|-----------|---------|
+| **Tamagui** | ✅ `tamagui.config.ts` | ✅ Auto-sync | Production Ready |
+| **Tailwind** | ✅ `tailwind.config.ts` | ❌ Manual | Production Ready |
+| **Mantine** | ✅ `mantine.config.ts` | ❌ Manual | Production Ready |
+| **CSS Variables** | ✅ `theme.css` | ❌ Manual | Production Ready |
+
+---
+
+## 🎯 Mejoras Recientes
+
+### **v1.0.3 - Última Actualización**
+- ✅ **Fixed JetBrains font issue** - Solo usa Montserrat (definido en tokens)
+- ✅ **Fixed validation logic** - Proper structure checking
+- ✅ **Auto-sync Tamagui config** - No manual edits required
+- ✅ **Builder-generated configs** - Single source of truth
+- ✅ **Type safety improvements** - Proper TypeScript types
+- ✅ **Zero warnings build** - Clean build process
+
+### **Próximas Mejoras**
+- 🔄 **Watch mode improvements**
+- 🔄 **Token documentation generator**
+- 🔄 **Figma sync integration**
+- 🔄 **Component token mapping**
+
+---
+
+## 🤝 Contribuir
+
+1. **Editar tokens**: Solo en `theme.tokens.json`
+2. **Build**: `pnpm build` (genera todo automáticamente)
+3. **Test**: `pnpm test` (valida configs)
+4. **Commit**: Incluir cambios generados
+5. **PR**: Con tests pasando
+
+**Regla de Oro**: 🎯 **Nunca editar configs generados manualmente**
+
+---
+
+## 📄 Licencia
+
+**Crediscore Design System** - Uso interno restringido
+
+© 2024 Crediscore - Todos los derechos reservados
 
 ---
 

@@ -1,6 +1,6 @@
 import type { TokenCollection } from '../types';
 import { toKebabCase, hexToRgbChannels } from '../utils/helpers';
-import { CONFIG } from '../config/constants';
+import { CONFIG } from '../../../../tests/constants';
 
 export const buildCSS = (globals: TokenCollection, themes: any): string => {
   const formatCSSValue = (val: any): string => {

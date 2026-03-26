@@ -1,5 +1,5 @@
 export const CONFIG = {
-  inputPath: '../../theme.tokens.json',
+  inputPath: './theme.tokens.json',
   outputPaths: {
     css: './dist/css/theme.css',
     tailwind: './dist/tailwind/tailwind.config.ts',
@@ -17,6 +17,12 @@ export const CONFIG = {
     'credi/color/accent/verde-vitalidad': '#86BD45',
     'credi/color/neutral/white': '#FFFFFF',
     'credi/color/neutral/black': '#2D2D2C',
+    'credi/color/neutral/gray200': '#E5E5E5',
+    'credi/color/neutral/gray400': '#B5B5B5',
+    'credi/color/neutral/gray600': '#7A7A7A',
+    'credi/color/neutral/gray800': '#4A4A4A',
+    'credi/color/neutral/gray50': '#F7F8F9',
+    'credi/color/neutral/overlay': 'rgba(45, 45, 44, 0.6)'
   },
   warningHeader: '/**\n' +
     ' * ⚠️ NO EDITAR DIRECTAMENTE ⚠️\n' +
@@ -24,7 +30,7 @@ export const CONFIG = {
     ' * Fuente: theme.tokens.json\n' +
     ' * Cualquier cambio manual será sobrescrito en la próxima compilación.\n' +
     ' * Figma Compliance: v1.0 - Tokens mapeados exactamente desde Figma Design System\n' +
-    ' */\n\n' +
+    ' */\n' +
     '/* eslint-disable */\n' +
-    '// @ts-nocheck\n\n',
+    '// @ts-nocheck\n'
 };

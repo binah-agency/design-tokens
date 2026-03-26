@@ -8,6 +8,7 @@ export interface TokenSchema {
   global: {
     color: Record<string, W3CToken<string>>;
     space: Record<string, W3CToken<string | number>>;
+    fontFamily: Record<string, W3CToken<string>>;
     typography: {
       fontFamily: Record<string, W3CToken<string>>;
       fontSize: Record<string, W3CToken<number>>;

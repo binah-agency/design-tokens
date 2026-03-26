@@ -1,5 +1,5 @@
 import type { TokenCollection } from '../types';
-import { CONFIG } from '../config/constants';
+import { CONFIG } from '../../../../tests/constants';
 
 export const buildTypeScript = (globals: TokenCollection, themes: any): string => {
   return CONFIG.warningHeader + `export interface TokenGlobals {\n` +
