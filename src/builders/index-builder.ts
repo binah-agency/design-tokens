@@ -10,17 +10,8 @@ export function buildIndex(tokens: TokenCollection): string {
  * Import specific framework configurations from their respective directories.
  */
 
-// CSS Variables
-export * from './css/theme.css';
-
-// Framework Configurations
-export * from './tailwind/tailwind.config';
-export * from './mantine/mantine.config';
-export * from './tamagui/tamagui.config';
-
-// TypeScript Types
-export * from './types/mantine';
-export * from './types/generated/enterprise-types';
+// CSS Variables (import as CSS in your app)
+// import '@crediscore/config/css/theme.css';
 
 // Token Collection for programmatic access
 export const tokens = ${JSON.stringify(tokens, null, 2)} as const;
@@ -29,10 +20,10 @@ export const tokens = ${JSON.stringify(tokens, null, 2)} as const;
  * Design Token Categories
  */
 export const colors = {
-  primary: tokens.color?.primary || {},
-  secondary: tokens.color?.secondary || {},
-  neutral: tokens.color?.neutral || {},
-  semantic: tokens.color?.semantic || {},
+  primary: tokens.colors?.primary || {},
+  secondary: tokens.colors?.secondary || {},
+  neutral: tokens.colors?.neutral || {},
+  semantic: tokens.colors?.semantic || {},
 };
 
 export const typography = {
@@ -58,13 +49,6 @@ export const borders = {
 };
 
 /**
- * Framework-specific exports
- */
-export { default as tailwindConfig } from './tailwind/tailwind.config';
-export { default as mantineConfig } from './mantine/mantine.config';
-export { default as tamaguiConfig } from './tamagui/tamagui.config';
-
-/**
  * Utility functions for token access
  */
 export function getToken(category: string, key: string): any {
@@ -72,7 +56,7 @@ export function getToken(category: string, key: string): any {
 }
 
 export function getColor(name: string): any {
-  return getToken('color', name);
+  return getToken('colors', name);
 }
 
 export function getFontSize(size: string): any {
@@ -82,5 +66,21 @@ export function getFontSize(size: string): any {
 export function getSpacing(size: string): any {
   return getToken('spacing', size);
 }
+
+/**
+ * CSS Import Helper
+ * Import this CSS file in your application:
+ * import '@crediscore/config/css/theme.css';
+ */
+export const cssPath = './css/theme.css';
+
+/**
+ * Framework configs are available as separate files:
+ * - ./tailwind/tailwind.config.ts
+ * - ./mantine/mantine.config.ts  
+ * - ./tamagui/tamagui.config.ts
+ * - ./types/mantine.d.ts
+ * - ./types/generated/enterprise-types.ts
+ */
 `;
 }

@@ -53,7 +53,7 @@ async function build(): Promise<void> {
       { path: CONFIG.outputPaths.tailwind, content: buildTailwind(resolvedGlobals, { light: resolvedLight, dark: resolvedDark }), name: 'Tailwind Config' },
       { path: CONFIG.outputPaths.mantine, content: buildMantine(), name: 'Mantine PostCSS' },
       { path: CONFIG.outputPaths.mantineConfig, content: buildMantineConfig(resolvedGlobals, tokens), name: 'Mantine Config' },
-      { path: CONFIG.outputPaths.tamagui, content: buildTamagui(resolvedGlobals), name: 'Tamagui Config' },
+      { path: CONFIG.outputPaths.tamagui, content: buildTamagui(resolvedGlobals, tokens), name: 'Tamagui Config' },
       { path: CONFIG.outputPaths.types, content: buildTypeScript(resolvedGlobals, { light: resolvedLight, dark: resolvedDark }), name: 'TypeScript Types' },
       { path: CONFIG.outputPaths.enterpriseTypes, content: buildEnterpriseTypes(resolvedGlobals), name: 'Enterprise Types' },
       { path: CONFIG.outputPaths.index, content: buildIndex(resolvedGlobals), name: 'Index File' },
